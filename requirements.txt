@@ -1,0 +1,5 @@
+djangorestframework
+django==5.2
+pyyaml
+django-filter
+django-oauth-toolkit

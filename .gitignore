@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+/static/
+/media/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Specs
+.kiro/
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# Elasticsearch data
+es_data/
+
+# Environment
+.env.local
+.env.*.local
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+
+OctoxlabsIntegrationCaseStudy/
+.client/async_client_memory_efficent.py

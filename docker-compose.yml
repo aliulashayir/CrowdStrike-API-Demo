@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: elasticsearch:8.11.0
+    container_name: octoxlabs-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    networks:
+      - octoxlabs-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: octoxlabs-api
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - elasticsearch
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ALLOWED_HOSTS=localhost,127.0.0.1,api,octoxlabs-api
+    volumes:
+      - .:/app
+    networks:
+      - octoxlabs-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: octoxlabs-client
+    depends_on:
+      - api
+      - elasticsearch
+    environment:
+      - API_URL=http://api:8000
+      - ES_URL=http://elasticsearch:9200
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+    volumes:
+      - ./client:/app
+    networks:
+      - octoxlabs-network
+    command: sh -c "sleep 15 && python async_client.py"
+
+volumes:
+  es_data:
+    driver: local
+
+networks:
+  octoxlabs-network:
+    driver: bridge
