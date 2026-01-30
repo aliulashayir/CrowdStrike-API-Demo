@@ -9,8 +9,8 @@ Bu demoyu, gerçek API'nin sınırlamalarını aşmaya çalışırken hazırlad�
 Docker ve Docker Compose kurulu olmalı.
 
 ```bash
-git clone https://github.com/yourusername/security-api-integration.git
-cd security-api-integration
+git clone https://github.com/aliulashayir/CrowdStrike-API-Demo.git
+cd CrowdStrike-API-Demo
 docker-compose up --build
 ```
 
